@@ -47,6 +47,55 @@ void mergeSort(vector<int32_t>& arr, int left, int right) {
     merge(arr, left, mid, right);
 }
 
+void quickSort(vector<int32_t>& arr, int left, int right) {
+    if (left >= right) return;
+    int pivot = arr[right];
+    int i = left - 1;
+    for (int j = left; j < right; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i+1], arr[right]);
+    int partitionIndex = i + 1;
+    quickSort(arr, left, partitionIndex - 1);
+    quickSort(arr, partitionIndex + 1, right);
+}
+
+void heapSort(vector<int32_t>& arr) {
+    int n = arr.size();
+    // Construir el heap (max-heap)
+    for (int i = n / 2 - 1; i >= 0; i--) {
+        int j = i;
+        while (j < n) {
+            int left = 2 * j + 1;
+            int right = 2 * j + 2;
+            int largest = j;
+            if (left < n && arr[left] > arr[largest]) largest = left;
+            if (right < n && arr[right] > arr[largest]) largest = right;
+            if (largest == j) break;
+            swap(arr[j], arr[largest]);
+            j = largest;
+        }
+    }
+    // Extraer elementos del heap
+    for (int i = n - 1; i > 0; i--) {
+        swap(arr[0], arr[i]);
+        int j = 0;
+        while (j < i) {
+            int left = 2 * j + 1;
+            int right = 2 * j + 2;
+            int largest = j;
+            if (left < i && arr[left] > arr[largest]) largest = left;
+            if (right < i && arr[right] > arr[largest]) largest = right;
+            if (largest == j) break;
+            swap(arr[j], arr[largest]);
+            j = largest;
+        }
+    }
+}
+
 // ----------- FUNCIONES AUXILIARES -----------
 
 bool readBinaryFile(const string& filename, vector<int32_t>& data) {
