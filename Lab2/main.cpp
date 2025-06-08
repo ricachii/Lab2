@@ -142,6 +142,7 @@ double measureAverageTime(Func sortingFunc, vector<int32_t> data, int runs=20) {
     for (int i = 0; i < runs; i++) {
         vector<int32_t> copy = data; // Copia para cada corrida
         auto start = high_resolution_clock::now();
+        cout << "Corriendo iteración " << i + 1 << " de " << runs << std::endl;
         sortingFunc(copy);
         auto stop = high_resolution_clock::now();
         double duration = duration_cast<microseconds>(stop - start).count()/1000.0; // ms
@@ -168,13 +169,30 @@ int main() {
     }
 
     cout << "Número de elementos: " << dataset.size() << endl;
+
+    //Limita el número de elementos a ordenar
+    cout << "Cuantos números desea ordenar: ";
+    size_t insertionLimit;
+    cin >> insertionLimit;
+
+    if (insertionLimit > dataset.size()) {
+        cout << "Se pidió más de lo disponible. Se usará el máximo permitido: " << dataset.size() << endl;
+        insertionLimit = dataset.size();
+    }
+    
     cout << "Midiendo tiempos promedio (20 corridas):" << endl;
 
-    double t_insertion = measureAverageTime(wrapperInsertionSort, dataset);
+    std::vector<int32_t> subset(dataset.begin(), dataset.begin() + insertionLimit);
+
+    double t_insertion = measureAverageTime(wrapperInsertionSort, subset);
     cout << "Insertion Sort: " << t_insertion << " ms" << endl;
 
-    double t_merge = measureAverageTime(wrapperMergeSort, dataset);
+    double t_merge = measureAverageTime(wrapperMergeSort, subset);
     cout << "Merge Sort: " << t_merge << " ms" << endl;
+
+    int asd;
+    std::cout<<"Presione cualquier tecla para terminar el codigo"<<std::endl;
+    std::cin >> asd;
 
     return 0;
 }
