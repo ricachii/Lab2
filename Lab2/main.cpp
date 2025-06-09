@@ -155,6 +155,7 @@ void wrapperInsertionSort(vector<int32_t>& arr) { insertionSort(arr); }
 void wrapperMergeSort(vector<int32_t>& arr)     { mergeSort(arr, 0, (int)arr.size() - 1); }
 void wrapperHeapSort(vector<int32_t>& arr)      { heapSort(arr); }
 void wrapperQuickSort(vector<int32_t>& arr)     { quickSort(arr, 0, (int)arr.size() - 1); }
+void wrapperStdSort(vector<int32_t>&arr)        { std::sort(arr.begin(), arr.end()): }
 void wrapperSelectionSort(vector<int32_t>& arr) { selectionSort(arr); }
 
 // ----------- PROGRAMA PRINCIPAL -----------
