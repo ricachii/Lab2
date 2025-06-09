@@ -185,7 +185,8 @@ int main() {
     cout << "Merge Sort:      " << measureAverageTime(wrapperMergeSort, dataset)      << " ms" << endl;
     cout << "Heap Sort:       " << measureAverageTime(wrapperHeapSort, dataset)       << " ms" << endl;
     cout << "Quick Sort:      " << measureAverageTime(wrapperQuickSort, dataset)      << " ms" << endl;
-    cout << "Selection Sort:  " << measureAverageTime(wrapperSelectionSort, dataset)   << " ms" << endl;
+    cout << "Insertion Sort:  " << measureAverageTime(wrapperStdSort, dataset)        << " ms" << endl;
+    cout << "Selection Sort:  " << measureAverageTime(wrapperSelectionSort, dataset)  << " ms" << endl;
 
     return 0;
 }
