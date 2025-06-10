@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <numeric>
 #include <cassert>
+#include <stack>
 
 using namespace std;
 using namespace std::chrono;
