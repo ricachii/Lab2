@@ -1,0 +1,39 @@
+int partition(vector<int32_t>& arr, int low, int high) {
+    // Mediana de 3
+    int mid = low + (high - low)/2;
+    if (arr[mid] < arr[low]) swap(arr[low], arr[mid]);
+    if (arr[high] < arr[low]) swap(arr[low], arr[high]);
+    if (arr[mid] < arr[high]) swap(arr[mid], arr[high]);
+    
+    int pivot = arr[high], i = low - 1;
+    for (int j = low; j < high; j++)
+        if (arr[j] < pivot) swap(arr[++i], arr[j]);
+    swap(arr[i+1], arr[high]);
+    return i+1;
+}
+
+// QuickSort iterativo
+void quickSortIterative(vector<int32_t>& arr, int low, int high) {
+    stack<int> st;
+    st.push(low);
+    st.push(high);
+
+    while (!st.empty()) {
+        high = st.top(); st.pop();
+        low = st.top(); st.pop();
+
+        if (low >= high) continue;
+
+        int pi = partition(arr, low, high);
+
+        if (pi - 1 > low) {
+            st.push(low);
+            st.push(pi - 1);
+        }
+
+        if (pi + 1 < high) {
+            st.push(pi + 1);
+            st.push(high);
+        }
+    }
+}
