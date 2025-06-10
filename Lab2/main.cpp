@@ -54,7 +54,12 @@ void heapSort(vector<int32_t>& arr) {
 }
 
 int partition(vector<int32_t>& arr, int low, int high) {
-    // Divide el arreglo respecto a un pivote.
+    // Mediana de 3
+    int mid = low + (high - low)/2;
+    if (arr[mid] < arr[low]) swap(arr[low], arr[mid]);
+    if (arr[high] < arr[low]) swap(arr[low], arr[high]);
+    if (arr[mid] < arr[high]) swap(arr[mid], arr[high]);
+    
     int pivot = arr[high], i = low - 1;
     for (int j = low; j < high; j++)
         if (arr[j] < pivot) swap(arr[++i], arr[j]);
@@ -63,13 +68,42 @@ int partition(vector<int32_t>& arr, int low, int high) {
 }
 
 void quickSort(vector<int32_t>& arr, int low, int high) {
-    // Ordenamiento eficiente promedio O(n log n) con recursividad.
-    if (low < high) {
-        int pi = partition(arr, low, high);
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+    stack<pair<int, int>> st;
+    st.push({low, high});
+
+    while (!st.empty()) {
+        auto [l, h] = st.top();
+        st.pop();
+
+        if (l >= h) continue;
+
+        // Insertion Sort para subarreglos pequeños
+        if (h - l + 1 <= 20) {
+            for (int i = l + 1; i <= h; i++) {
+                int32_t key = arr[i];
+                int j = i - 1;
+                while (j >= l && arr[j] > key) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                }
+                arr[j + 1] = key;
+            }
+            continue;
+        }
+
+        int pi = partition(arr, l, h);
+
+        // Procesar primero la partición más pequeña
+        if (pi - l < h - pi) {
+            st.push({l, pi - 1});
+            st.push({pi + 1, h});
+        } else {
+            st.push({pi + 1, h});
+            st.push({l, pi - 1});
+        }
     }
 }
+
 
 void merge(vector<int32_t>& arr, int left, int mid, int right) {
     // Mezcla dos mitades ordenadas.
